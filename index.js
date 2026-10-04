@@ -270,39 +270,58 @@ if (interaction.commandName === 'vero-falso') {
         }
     });
 };
+const { Client, GatewayIntentBits, REST, Routes } = require('discord.js');
 
-const { REST, Routes } = require('discord.js');
 
+
+// Definizione dei comandi slash
 const commands = [
     {
         name: 'claim',
-        description: 'Riscatta i tuoi punti canale gratuiti ogni 30 minuti!'
+        description: 'Richiedi il tuo premio!',
     },
     {
         name: 'quiz-pro',
-        description: 'Rispondi alla domanda a scelta multipla e dimostra quanto ne sai!'
+        description: 'Mettiti alla prova con il quiz pro!',
     },
     {
         name: 'vero-falso',
-        description: 'Mettiti alla prova con il gioco rapido Vero o Falso!'
+        description: 'Mettiti alla prova con il gioco rapido Vero o Falso!',
     }
 ];
 
-const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+client.once('ready', async () => {
+    console.log(`RX Bot attivo e online come: ${client.user.tag}`);
 
-(async () => {
+    // Registrazione automatica dei comandi all'avvio
+    const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+
     try {
-        console.log('Aggiornamento comandi slash (/) in corso...');
-
+        console.log('In corso la registrazione dei comandi slash...');
         await rest.put(
             Routes.applicationCommands(client.user.id),
             { body: commands },
         );
-
-        console.log('Comandi slash (/) registrati con successo!');
+        console.log('Comandi slash registrati con successo!');
     } catch (error) {
-        console.error(error);
+        console.error('Errore durante la registrazione dei comandi:', error);
     }
-})();
+});
 
+// Gestione dei comandi (esempio base)
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isChatInputCommand()) return;
+
+    const { commandName } = interaction;
+
+    if (commandName === 'claim') {
+        await interaction.reply('Hai richiesto il tuo premio con successo!');
+    } else if (commandName === 'quiz-pro') {
+        await interaction.reply('Benvenuto nel Quiz Pro!');
+    } else if (commandName === 'vero-falso') {
+        await interaction.reply('Inizia il gioco Vero o Falso!');
+    }
+});
+
+// Login del bot
 client.login(process.env.DISCORD_TOKEN);
