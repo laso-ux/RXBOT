@@ -28,7 +28,39 @@ const LOGO_GIF_URL = 'https://cdn.discordapp.com/attachments/1555947304689602700
 client.once('clientReady', () => {
     console.log(`🤖 RX Bot attivo e online come: ${client.user.tag}`);
 });
+const { REST, Routes } = require('discord.js');
 
+const commands = [
+    {
+        name: 'claim',
+        description: 'Richiedi il tuo premio!',
+    },
+    {
+        name: 'quiz-pro',
+        description: 'Mettiti alla prova con il quiz pro!',
+    },
+    {
+        name: 'vero-falso',
+        description: 'Mettiti alla prova con il gioco rapido Vero o Falso!',
+    }
+];
+
+client.once('clientReady', async () => {
+    console.log(`🤖 RX Bot attivo e online come: ${client.user.tag}`);
+
+    // Registrazione comandi slash
+    const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+    try {
+        console.log('In corso la registrazione dei comandi slash...');
+        await rest.put(
+            Routes.applicationCommands(client.user.id),
+            { body: commands },
+        );
+        console.log('Comandi slash registrati con successo!');
+    } catch (error) {
+        console.error('Errore durante la registrazione dei comandi:', error);
+    }
+});
 // Evento: Benvenuto e Autorole
 client.on('guildMemberAdd', async (member) => {
     try {
@@ -275,20 +307,7 @@ const { Client, GatewayIntentBits, REST, Routes } = require('discord.js');
 
 
 // Definizione dei comandi slash
-const commands = [
-    {
-        name: 'claim',
-        description: 'Richiedi il tuo premio!',
-    },
-    {
-        name: 'quiz-pro',
-        description: 'Mettiti alla prova con il quiz pro!',
-    },
-    {
-        name: 'vero-falso',
-        description: 'Mettiti alla prova con il gioco rapido Vero o Falso!',
-    }
-];
+
 
 client.once('ready', async () => {
     console.log(`RX Bot attivo e online come: ${client.user.tag}`);
