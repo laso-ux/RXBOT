@@ -38,7 +38,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
         console.log('🔄 Inizio registrazione dei comandi slash...');
         
         // METTI QUI IL TUO ID SERVER TRA GLI APICI (es: '123456789012345678')
-        const GUILD_ID = 'IL_TUO_ID_SERVER_VERO'; 
+        const GUILD_ID = '1555944851856433165'; 
         const CLIENT_ID = client.user ? client.user.id : process.env.CLIENT_ID; // O usa il tuo Client ID se preferisci
 
         await rest.put(
