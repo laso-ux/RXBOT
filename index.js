@@ -42,7 +42,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
         const CLIENT_ID = client.user ? client.user.id : process.env.CLIENT_ID; // O usa il tuo Client ID se preferisci
 
         await rest.put(
-            Routes.applicationGuildCommands('1416805822606540864', 'IL_TUO_ID_SERVER_VERO'), // Metti qui l'ID del client del bot e l'ID del server
+            Routes.applicationGuildCommands('1555968067014500372', '1555944851856433165'), // Metti qui l'ID del client del bot e l'ID del server
             { body: commands },
         );
         
@@ -60,22 +60,6 @@ client.once('ready', () => {
         console.error("❌ ERRORE: DISCORD_TOKEN non trovato nelle variabili d'ambiente!");
         return;
     }
-
-    
-    try {
-        console.log('In corso la registrazione dei comandi slash per il server...');
-        
-        // ⚠️ INSERISCI QUI SOTTO L'ID DEL TUO SERVER TRA GLI APICI!
-        const GUILD_ID = '1555944851856433165'; 
-
-        await rest.put(
-            Routes.applicationGuildCommands(client.user.id, GUILD_ID),
-            { body: commands },
-        );
-        console.log('✅ Comandi slash registrati istantaneamente nel server!');
-    } catch (error) {
-        console.error('❌ Errore durante la registrazione dei comandi:', error);
-    };
 
 // Gestione Benvenuto Nuovi Utenti
 client.on('guildMemberAdd', async (member) => {
