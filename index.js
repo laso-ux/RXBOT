@@ -30,27 +30,22 @@ const commands = [
     { name: 'ticket-setup', description: 'Crea il pannello dei ticket nel canale' }
 ];
 
-// Registrazione immediata dei comandi tramite REST
-const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+client.once('ready', async () => {
+    console.log(`🤖 RX Bot attivo e online come: ${client.user.tag}`);
 
-(async () => {
+    // Registrazione forzata dei comandi all'avvio dentro ready
+    const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
     try {
-        console.log('🔄 Inizio registrazione dei comandi slash...');
-        
-        // METTI QUI IL TUO ID SERVER TRA GLI APICI (es: '123456789012345678')
-        const GUILD_ID = '1555944851856433165'; 
-        const CLIENT_ID = client.user ? client.user.id : process.env.CLIENT_ID; // O usa il tuo Client ID se preferisci
-
+        console.log('🔄 Registrazione comandi slash in corso...');
         await rest.put(
-            Routes.applicationGuildCommands('1555968067014500372', '1555944851856433165'), // Metti qui l'ID del client del bot e l'ID del server
+            Routes.applicationGuildCommands('1555968067014500372', '1555944851856433165'),
             { body: commands },
         );
-        
         console.log('✅ Comandi slash registrati con successo nel server!');
     } catch (error) {
-        console.error('❌ Errore durante la registrazione dei comandi:', error);
+        console.error('❌ Errore nella registrazione dei comandi:', error);
     }
-})();
+});
 
 client.once('ready', () => {
     console.log(`🤖 RX Bot attivo e online come: ${client.user.tag}`);
