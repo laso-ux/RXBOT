@@ -40,18 +40,22 @@ const commands = [
     }
 ];
 
-// 3. Evento di avvio e registrazione automatica comandi
+// 3. Evento di avvio e registrazione comandi mirata per il server
 client.once('clientReady', async () => {
     console.log(`🤖 RX Bot attivo e online come: ${client.user.tag}`);
 
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
     try {
-        console.log('In corso la registrazione dei comandi slash...');
+        console.log('In corso la registrazione dei comandi slash per il server...');
+        
+        // Incolla qui l'ID del tuo server tra gli apici
+        const GUILD_ID = '1555944851856433165'; 
+
         await rest.put(
-            Routes.applicationCommands(client.user.id),
+            Routes.applicationGuildCommands(client.user.id, GUILD_ID),
             { body: commands },
         );
-        console.log('Comandi slash registrati con successo!');
+        console.log('Comandi slash registrati istantaneamente nel server!');
     } catch (error) {
         console.error('Errore durante la registrazione dei comandi:', error);
     }
